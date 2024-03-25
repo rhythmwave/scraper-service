@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, JSON
+from sqlalchemy import create_engine, Column, Integer, String, JSON, Text, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from config import Config
@@ -43,7 +43,19 @@ class UserReel(Base):
 
     id = Column(Integer, primary_key=True)
     userid = Column(Integer)
-    data = Column(JSON)
+    caption = Column(Text)
+    code = Column(String,unique=True)
+    url = Column(String)
+    reel_id = Column(String)
+    media_type = Column(Integer)
+    product_type = Column(String)
+    taken_at = Column(Integer)
+    video_duration = Column(Float)
+    play_count = Column(Integer)
+    like_count = Column(Integer)
+    comment_count = Column(Integer)
+    fb_like_count = Column(Integer)
+    fb_play_count = Column(Integer)
     __tableargs__ = {'extend_existing': True}
 
 Base.metadata.create_all(engine)

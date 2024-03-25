@@ -38,8 +38,8 @@ class UserPost(Base):
     data = Column(JSON)
     __tableargs__ = {'extend_existing': True}
 
-class UserReel(Base):
-    __tablename__ = 'user_reels'
+class UserMedia(Base):
+    __tablename__ = 'user_media'
 
     id = Column(Integer, primary_key=True)
     userid = Column(Integer)
@@ -56,6 +56,26 @@ class UserReel(Base):
     comment_count = Column(Integer)
     fb_like_count = Column(Integer)
     fb_play_count = Column(Integer)
+    __tableargs__ = {'extend_existing': True}
+
+
+class Comments(Base):
+    __tablename__ = 'media_comments'
+
+    id = Column(Integer,primary_key=True)
+    comment_id = Column(Integer)
+    userid = Column(Integer)
+    username = Column(String)
+    full_name = Column(String)
+    text = Column(Text)
+    reel_id = Column(String)
+    created_at = Column(Integer)
+    index = Column(Integer)
+    like_count = Column(Integer)
+    child_comment_count = Column(Integer)
+    parent_comment_id = Column(Integer)
+    replied_to_comment_id = Column(Integer)
+    owner_reply_count = Column(Integer)
     __tableargs__ = {'extend_existing': True}
 
 Base.metadata.create_all(engine)

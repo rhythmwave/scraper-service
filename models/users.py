@@ -7,12 +7,28 @@ Base = declarative_base()
 config = Config()
 engine = create_engine(config.DATABASE_URL)
 
+class UserType(Base):
+    __tablename__ = 'user_types'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    __tableargs__ = {'extend_existing': True}
+
 class UserProfile(Base):
     __tablename__ = 'user_profiles'
 
     id = Column(Integer, primary_key=True)
-    username = Column(String)
-    data = Column(JSON)
+    type = Column(Integer)
+    username = Column(String,unique=True)
+    userid = Column(Integer)
+    bio = Column(String)
+    category = Column(String)
+    full_name = Column(String)
+    followers = Column(Integer)
+    following = Column(Integer)
+    friends = Column(Integer)
+
+    __tableargs__ = {'extend_existing': True}
 
 class UserPost(Base):
     __tablename__ = 'user_posts'
@@ -20,6 +36,7 @@ class UserPost(Base):
     id = Column(Integer, primary_key=True)
     userid = Column(Integer)
     data = Column(JSON)
+    __tableargs__ = {'extend_existing': True}
 
 class UserReel(Base):
     __tablename__ = 'user_reels'
@@ -27,5 +44,6 @@ class UserReel(Base):
     id = Column(Integer, primary_key=True)
     userid = Column(Integer)
     data = Column(JSON)
+    __tableargs__ = {'extend_existing': True}
 
 Base.metadata.create_all(engine)

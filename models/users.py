@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, JSON, Text, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from config import Config
+from config.main import Config
 
 Base = declarative_base()
 config = Config()

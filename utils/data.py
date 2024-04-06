@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, Column, Integer, String, JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from models.users import UserProfile, Comments, UserMedia
-from config import Config
+from config.main import Config
 
 config = Config()
 

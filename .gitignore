@@ -161,3 +161,4 @@ cython_debug/
 
 # Ignore temp folder
 temp/
+/temp/login_page_data.txt

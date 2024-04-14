@@ -26,6 +26,7 @@ class UserProfile(Base):
     full_name = Column(String)
     followers = Column(Integer)
     following = Column(Integer)
+    media = Column(Integer)
     friends = Column(Integer)
 
     __tableargs__ = {'extend_existing': True}

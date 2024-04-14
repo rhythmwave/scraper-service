@@ -3,6 +3,8 @@ from scrape.instagram_api.target import target_profile,get_profile
 import os
 from config.instagram import Config
 from utils.request import save_http_response
+from utils.data import save_data
+from models.users import UserProfile
 import pdb
 
 config = Config()
@@ -33,11 +35,12 @@ else:
   print("Failed to retrieve login page content.")
 
 # Fetch target page content and token
-target_page, target_data = target_profile('ridwankamil')
+target_username = 'ridwankamil'
+target_page, target_data = target_profile(target_username)
 # Check if content retrieved
 if target_page:
   # Open file in write mode (overwrite existing content)
-  targetpath = os.path.join(os.getcwd() + '/temp/target_page.txt')
+  targetpath = os.path.join(os.getcwd() + '/temp/target_page'+target_username+'.txt')
   with open(targetpath, "w", encoding="utf-8") as f:
     # Write login page content
     f.write(target_page)
@@ -54,6 +57,21 @@ target_profile, target_profile_data = get_profile(target_data)
 
 # Check if content retrieved
 if target_profile:
+
+  # Save profile into database table
+  pdb.set_trace()
+  profile_data = {}
+  profile_data['type'] = config.INSTAGRAM_TYPE
+  profile_data['username'] = target_profile_data['data']['user']['username']
+  profile_data['userid'] = target_profile_data['data']['user']['id']
+  profile_data['full_name'] = target_profile_data['data']['user']['full_name']
+  profile_data['following'] = target_profile_data['data']['user']['following_count']
+  profile_data['followers'] = target_profile_data['data']['user']['follower_count']
+  profile_data['bio'] = target_profile_data['data']['user']['biography']
+  profile_data['category'] = target_profile_data['data']['user']['category']
+  profile_data['media'] = target_profile_data['data']['user']['media_count']
+  save_data(profile_data,UserProfile)
+
   # Open file in write mode (overwrite existing content)
   target_profilepath = os.path.join(os.getcwd() + '/temp/target_profile.txt')
   with open(target_profilepath, "w", encoding="utf-8") as f:

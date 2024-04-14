@@ -3,8 +3,9 @@ from bs4 import BeautifulSoup
 from config.instagram import Config, API, Session
 import re
 from utils.request import post_process_data,pre_process_request,process_request
-import pdb
+import json
 import urllib.parse
+import pdb
 
 config = Config()
 api = API(config)
@@ -101,6 +102,8 @@ def get_profile(data):
     'doc_id':'7381344031985950'
   }
 
+  json_data={}
+
   try:
     request_data = pre_process_request(
       url=endpoint,
@@ -118,7 +121,15 @@ def get_profile(data):
       # Process successful response
       response.raise_for_status()
 
-      return response.text, None
+      try:
+        # Try to decode the response as JSON
+        json_data = json.loads(response.text)
+        # If successful, return the JSON data
+
+      except json.JSONDecodeError:
+        print(f"Error: Response is not valid JSON for target profile.")
+
+      return response.text, json_data
     else:
       print("Error: Failed to retrieve data")
   except requests.exceptions.RequestException as e:

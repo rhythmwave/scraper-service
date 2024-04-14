@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify,Blueprint
+from flask import request, jsonify,Blueprint
 from models.users import UserProfile, Comments, UserMedia  # Import models
 from scrape.instagram import scrape_instagram_profile, scrape_instagram_media, scrape_instagram_comment
 import os
